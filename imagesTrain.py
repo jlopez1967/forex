@@ -10,10 +10,10 @@ from keras import backend as K
 img_width, img_height = 224, 224
 img_width, img_height = 480, 349
 
-train_data_dir = 'v_data_a2/train'
-validation_data_dir = 'v_data_a2/valid'
+train_data_dir = 'v_data_a3/train'
+validation_data_dir = 'v_data_a3/valid'
 nb_train_samples = 3500
-nb_validation_samples = 1500
+nb_validation_samples = 1400
 epochs = 80
 batch_size = 25
 
