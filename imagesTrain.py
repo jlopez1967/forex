@@ -9,8 +9,8 @@ from keras import backend as K
 img_width, img_height = 224, 224
 img_width, img_height = 480, 349
 
-train_data_dir = 'v_data_fx/train'
-validation_data_dir = 'v_data_fx/valid'
+train_data_dir = 'v_data_a1/train'
+validation_data_dir = 'v_data_a1/valid'
 nb_train_samples = 970
 nb_validation_samples = 100
 epochs = 80
