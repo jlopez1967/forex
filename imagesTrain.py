@@ -9,12 +9,12 @@ from keras import backend as K
 img_width, img_height = 224, 224
 img_width, img_height = 480, 349
 
-train_data_dir = 'v_data/train'
-validation_data_dir = 'v_data/test'
-nb_train_samples = 400
+train_data_dir = 'v_data_fx/train'
+validation_data_dir = 'v_data_fx/valid'
+nb_train_samples = 970
 nb_validation_samples = 100
-epochs = 10
-batch_size = 16
+epochs = 80
+batch_size = 25
 
 if K.image_data_format() == 'channels_first':
 	input_shape = (3, img_width, img_height)
@@ -36,6 +36,7 @@ model.add(MaxPooling2D(pool_size =(2, 2)))
 
 model.add(Flatten())
 model.add(Dense(64))
+model.add(Dense(64))
 model.add(Activation('relu'))
 model.add(Dropout(0.5))
 model.add(Dense(1))
@@ -51,16 +52,20 @@ train_datagen = ImageDataGenerator(
 				zoom_range = 0.2,
 			horizontal_flip = True)
 
+
 test_datagen = ImageDataGenerator(rescale = 1. / 255)
+
+
 
 train_generator = train_datagen.flow_from_directory(train_data_dir,
 							target_size =(img_width, img_height),
-					batch_size = batch_size, class_mode ='binary')
+					batch_size = batch_size, class_mode ='binary',shuffle=False)
 
 validation_generator = test_datagen.flow_from_directory(
 									validation_data_dir,
 				target_size =(img_width, img_height),
-		batch_size = batch_size, class_mode ='binary')
+		batch_size = batch_size, class_mode ='binary',shuffle=False)
+
 
 model.fit_generator(train_generator,
 	steps_per_epoch = nb_train_samples // batch_size,
@@ -68,3 +73,4 @@ model.fit_generator(train_generator,
 	validation_steps = nb_validation_samples // batch_size)
 
 model.save_weights('model_saved.h5')
+
