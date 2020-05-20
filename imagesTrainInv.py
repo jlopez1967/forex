@@ -4,16 +4,17 @@ from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Activation, Dropout, Flatten, Dense
 from keras import backend as K
+import keras
+import keras_metrics
 
 ###https://www.geeksforgeeks.org/python-image-classification-using-keras/
-img_width, img_height = 224, 224
 img_width, img_height = 960, 698
 
-train_data_dir = '/home/jlopez/proyectosJCL/maquinaApredizajeBooleana/v_data_a4aInv/train'
-validation_data_dir = '/home/jlopez/proyectosJCL/maquinaApredizajeBooleana/v_data_a4aInv/valid'
-nb_train_samples = 3400
+train_data_dir = 'v_data_a4aInv/train'
+validation_data_dir = 'v_data_a4aInv/valid'
+nb_train_samples = 3500
 nb_validation_samples = 1400
-epochs = 150
+epochs = 120
 batch_size = 25
 
 if K.image_data_format() == 'channels_first':
@@ -44,7 +45,7 @@ model.add(Activation('sigmoid'))
 
 model.compile(loss ='categorical_crossentropy',
 					optimizer ='rmsprop',
-				metrics =['accuracy'])
+				metrics =['accuracy',keras.metrics.Precision(), keras.metrics.Recall()])
 
 train_datagen = ImageDataGenerator(
 				rescale = 1. / 255,
@@ -73,3 +74,4 @@ model.fit_generator(train_generator,
 	validation_steps = nb_validation_samples // batch_size)
 
 model.save_weights('model_saved.h5')
+
